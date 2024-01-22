@@ -1,0 +1,235 @@
+Akshai Saini - Course
+-----------------------
+
+REACT JS 
+========
+
+1. Namaste React Web Series code repository : https://github.com/namastedev/namaste-react
+2. NetflixGPT Project Github repository -
+https://github.com/akshaymarch7/netflix-gpt
+3. YouTube Project GitHub repository -
+https://github.com/akshaymarch7/namaste-youtube
+
+
+Explore:
+---------
+What is CDN?
+What is cross origin?
+
+What is React?
+	React is a Javascript library written by Facebook developers to make front end even faster and powerful.
+	How to make our normal Html file/application a React enabled?
+	By installing react in to our app. There are two ways in which we can do this?
+	One by importing CDN links.
+	
+	<!--CDN React-->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+	
+	react.development.js - Core of the react - core framework react algorithm.
+	react-dom.development.js -  React library for DOM operations, for manipulating DOM.
+	
+	Why did facebook made two files? can't we club these into single file?
+	Because react is core which will be used across devices for mobile (react-native) or for some other devices as well, but react-dom is only for browsers, hence no clubbing of these together. So, react-dom is kind of bridge to connect to the Browser DOM.
+	
+Simple Hello world from Html and JS:
+--------------------------------------
+<body>
+    <div id="root">
+      <!-- <h1>Hello World!</h1> -->
+    </div>
+    <script>
+      const heading = document.createElement("h1");
+      heading.innerHTML = "Hello world from Javascript!";
+
+      const root = document.getElementById("root");
+      root.appendChild(heading);
+    </script>
+  </body>
+
+
+Same Hello world from React:
+------------------------------
+  <body>
+    <div id="root"></div>
+    <!--CDN React-->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
+    <script>
+      const heading = React.createElement("h1", {}, "Hello world from React!"); 
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+
+      root.render(heading);
+    </script>
+  </body> 
+
+React core creates a h1 element. ReactDOM will make the root node a root for ReactDOM and render will append the heading element.
+Most costly operation in a web page is DOM manipulation, as it removes/modifies/adds elements to DOM tree. 
+
+React is mainly developed with philosophy everything we do inside web page to be done with JS.
+
+Basically the React.createElement returns React object/JS object, not a plain html. It contains the props (attributes and the children we passed)
+in below snippet, attributes are id, xyz and children is "Hello world from React!".
+
+      const heading = React.createElement(
+        "h1",
+        {
+          id: "heading",
+          xyz: "abc",
+        },
+        "Hello world from React!"
+      );
+	  
+	  "render" method will basically convert this ReactElementobject to actual h1 element and put it inside root node.
+	  Suppose we want two children to be passed, like in this case, there is a h2 element as well we need to pass. 
+	  Give the children in the array inside the React.createElement third parameter.
+	  
+	  if this structure I want to create: see the code snippet below provided and notice the array for h1, h2;
+	  
+	  <div id=parent>
+		<div id=child>
+			<h1>
+			<h2>
+		</div>
+	  </div>
+
+--------------------------------------------------------------------------------	  
+const parent = React.createElement(
+  "div",
+  {
+    id: "parent",
+    xyz: "abc",
+  },
+  React.createElement("div", { id: "child" }, [
+    React.createElement("h1", {}, "I am an h1 tag"),
+    React.createElement("h2", {}, "I am an h2 tag"),
+  ])
+);
+
+console.log(parent);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(parent);
+
+--------------------------------------------------------------------------------
+
+If suppose, we want to create something like below;
+
+ <div id=parent>
+	<div id=child>
+		<h1>
+		<h2>
+	</div>
+	<div id=child2>
+		<h1>
+		<h2>
+	</div>
+ </div>
+ 
+--------------------------------------------------------------------------------	  
+const parent = React.createElement(
+  "div",
+  {
+    id: "parent",
+    xyz: "abc",
+  },
+  [
+	React.createElement("div", { id: "child" }, [
+    React.createElement("h1", {}, "I am an h1 tag"),
+    React.createElement("h2", {}, "I am an h2 tag"),
+	]),
+	React.createElement("div", { id: "child2" }, [
+		React.createElement("h1", {}, "I am an h1 tag from child2"),
+		React.createElement("h2", {}, "I am an h2 tag from child2"),
+	])
+  ]
+);
+
+console.log(parent);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(parent);
+
+--------------------------------------------------------------------------------
+ 
+ But this looks complex right and untidy, to help us from this we have something called as JSX. 
+ So mostly we won't be using React.createElement much, we will talk about JSX in the next video.
+ 
+ So in this case react works only on the element/container where id is set to root, above or below whatever contents we have it won't be impacted by the react. This is the reason we call the react as library as well, as it can be applied to even small portion of your application.
+ Basically, ReactDOM.createRoot sets the working area for the react code.
+
+
+Can React itself make an app fast? 
+------------------------------------
+		-> No there are much more things/packages behind the scenes working together to make an application faster.
+		-> First of all, what is npm? I thought it is "Node Package Manager" but it is everything but not Node Package Manager hahaha....
+		its cool fact. Go visit npm official web site. https://www.npmjs.com/
+		-> But infact npm behind the scenes works as a node package manager, but does not stand for Node Package Manager.
+		-> Then what is this npm? it is a standard repository for all the packages, biggest package manager, any package need to be used in the 
+		project, we can use npm. All the packages, libraries, utilities that can be used for a project are hosted over there.
+		
+		-> To ignite our react app, we need npm to be added, normally when we do "npx create-react-app name" it powers the react app with all the packages to make it powerful. 
+		-> here in our app, how do we add npm to our project? using npm init (-y) (when using '-y' it skips some packages)
+			once we have this command run in terminal - npm init
+			we will be asked with number of questions like author name, package name, entry file, git repository, test script, description.
+			Once after all that is done, we can see a new file is added to our project named "package.json".
+			
+		What is this package.json?
+		---------------------------
+			--> This is basically the configuration for npm.
+			
+		Why do we need this package.json file?
+		------------------------------------------
+			--> basically what is npm? it is a package manager, manages all the packages that will be installed/used in our application.
+			But what are these packages? these are also known as dependencies, basically our app will be usually dependent on multiple packages.
+			The packages which our project are dependent on are known as dependencies. 
+			NPM - basically manages/take care of these dependencies and it does it from package.json.
+			As we go further, we will learn more about it.
+			
+		Now we will get a package/dependency in to our project.
+		What dependency we are going to install to our project, the most important package in our project ? it is a Bundler.
+		What is a bundler? basically before we move our code (html, css, js) files to production, our files needs to be cleaned, compressed, minified, the bundler helps us to do this.
+			
+		Examples of Bundlers: Web pack, Parcel, Vite etc.,
+
+		Job of a bundler is to take the code files and combine them, bundlem them together to single optimized file, so that it can be shipped to production.
+
+		"Create-react-app" - behind the scenes uses web pack bundler and babel to build things up.
+
+		We are going to use Parcel in our project to ignite our app, why Parcel? it is just a choice, almost all the bundlers out there does the same job but may do it in different way, but the end goal of a bundler is to bundle, combine code files together to single unit.
+
+		How do we get Parcel in to our app? it is a node package, since we have npm in our project, we can install it easily.
+		We can just use the command "npm install package-name"
+
+			--> npm install -D parcel 
+			
+			but what does this -D mean? 
+			
+		Basically there are two dependencies we can install into our project. one is dev dependencies, another is normal dependencies.
+		dev - for development environment. - but read more about it online.
+		normal - even for production environment.
+		
+		So with the above command, we tell the package manager (npm) we want dev package/dependency of Parcel. And from the npm repository the parcel package will get installed to our project.
+		Parcel is like a beast, it gives amazing power to our app.
+
+		
+		
+	  
+	  
+  
