@@ -1,0 +1,19 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "namaste react course",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gowthamnhub/Namaste-React.git"
+  },
+  "author": "Gowthaman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gowthamnhub/Namaste-React/issues"
+  },
+  "homepage": "https://github.com/gowthamnhub/Namaste-React#readme"
+}
