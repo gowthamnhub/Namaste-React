@@ -395,3 +395,109 @@ Instead of keep writing big commands to start/build .... our app it is industry 
 			}
 			
 	And we can just do; npm run start, npm run build (for start we can also do npm start, but for build it does not work - npm build).		
+	
+	
+In general - React.createElement returns an JS object, when it is rendered by ReactDOM it is converted to actual HTML elements and rendered in browser.
+		React Element is created.
+			- const heading = React.createElement("h1",{id: "heading"},"Hello World from React!");	
+			
+		React DOM object is created by referring to actual DOM's root element. 
+			- const root = ReactDOM.createRoot(document.getElementById("root"));
+			- this is the bridge between actual React objects and browser DOM.
+			
+		Actual DOM is replaced with reactDOM by calling - root.render(heading);
+
+
+	But onething we can notice here is creating elements with core React like below;
+		React.createElement("h1",{id: "heading"},"Hello World from React!");	
+		
+		this is kind of hard to read right, just for creating h1 tag, it is having bit complex kinda code when building large scale applications, it may become very much unreadable for developers, application will still work, but would be hard for developers to read, understand and debug later.
+		
+		To get rid of this problem, Facebook developers created something called as JSX - which is not HTML inside javascript, but it has HTML or XML like syntax to build react elements.
+		
+		Eg: 
+			const jsxHeading = <h1 id="jsxHeading" style={{color: "blue"}}>Hello World from JSX!</h1>
+			
+			it looks easier right to read. it is exactly same as above, creating same react object. JSX is the syntax create react elements in HTML like / XML like format.
+			
+			But this is not a valid JS, JS engine understands only ECMASCRIPT it does not understand JSX. 
+			But before even JSX code reaches JS engine, this is transpiled to JS engine understandable code, who does this transpilation - BABEL (but we did not install BABEL right) where does it come from - it is inside PARCEL.
+			
+			JSX -> PARCEL hands it to BABEL for transpilation -> all jsx elements converted to React.createElement code -> ReactDom then while rendering the elements are converted to HTML elements in browser.
+			JSX properties use camelCasing. for class - use className, tabIndex.
+			
+			BABEL - is not from FACEBOOK, it is a separate package. 
+			And Babel also does a lot of code optimization for production builds (like stripping out console.log) and also helps translating modern js ES6+ for older browsers to not break the app in old browsers.	
+			
+			
+	Helpful Extensions:
+			- Prettier Code Formatter (Prettier)
+			- Bracket Pair Colorization Toggler (Dzhavet Ushev)
+			
+REACT COMPONENTS:
+------------------
+	React Functional Components - latest industry standard.
+	Class Based Components - legacy way.
+
+	React Functional Components - are JS functions returning JSX elements.	
+		-> it should use pascal casing for function name.
+	
+	Eg: 
+		const ReactFunctionHeading = () => {
+					return <h1 id="reactFunctionHeading" style={{color: "green"}}>
+					Hello World from React Function!
+					</h1>
+				}
+				
+	To use javascript inside a JSX -  we can use {} bracket to put js code. 
+		for eg: 
+			const ReactFunctionHeading = () => (
+						300 + 200 = {300 + 200}
+			)
+		
+	One more thing; JSX already handles the CROSS SITE SCRIPTING attack by sanitizing (HTML escaping) like converting special symbols < > & " ' into &lt; &gt; &amp; &quot; &#x27;  the data whatever you put inside curly braces.
+	
+	
+Episode 3 Assignment:
+---------------------
+Chapter 03- Laying the Foundation
+
+Topics
+● JSX
+● React.createElement vs JSX
+● Benefits of JSX
+● Behind the Scenes of JSX
+● Babel &parcel role in JSX
+● Components
+● Functional Components
+○ Composing Components
+
+Assignment
+● What is JSX? - Javascript Extension Syntax to write React elements code in a readable way.
+● Superpowers of JSX - Readablility, Sanitization to prevent XSS.
+● Role of type attribute in script tag? What options can I use there?
+● {TitleComponent} vs {<TitleComponent/>} vs
+{<TitleComponent></TitleComponent>} in JSX
+Coding Assignment:
+● Create a Nested header Element using React.createElement(h1,h2,h3 inside a
+div with class “title”)
+○ Create the same element using JSX
+○ Create a functional component of the same with JSX
+○ Pass attributes into the tag in JSX
+○ Composition of Component(Add a component inside another)
+○ {TitleComponent} vs {<TitleComponent/>} vs
+{<TitleComponent></TitleComponent>} in JSX
+● Create a Header Component from scratch using Functional Components with
+JSX
+○ Add a Logo on left
+○ Add a search bar in middle
+○ Add User icon on right
+○ Add CSS to make it look nice
+References
+● Babel: https://babeljs.io/
+● Attribute Type:
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-type
+● JSModules:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+● Babel Playground: https://babeljs.io/repl#
+● React without JSX: https://reactjs.org/docs/react-without-jsx.htm	

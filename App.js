@@ -1,34 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Assignment2 } from "./Assignment2";
 
-const heading = React.createElement(
-  "h1",
-  {
-    id: "heading",
-    xyz: "abc",
-  },
-  "Hello world from React!"
-);
+const heading = React.createElement("h1",{id: "heading"},"Hello World from React!");
 
-const parent = React.createElement(
-  "div",
-  {
-    id: "parent"
-  },
-  [
-    React.createElement("div", { id: "child" }, [
-      React.createElement("h1", {}, "I am Gowthaman"),
-      React.createElement("h2", {}, "I am an h2 tag"),
-    ]),
-    React.createElement("div", { id: "child2" }, [
-      React.createElement("h1", {}, "I am an h1 tag from child2"),
-      React.createElement("h2", {}, "I am an h2 tag from child2"),
-    ]),
-  ]
-);
+const jsxHeading = 
+<h1 id="jsxHeading" style={{color: "blue"}}>
+  Hello World from JSX!  
+</h1>
 
-console.log(parent);
+const Title = () => <h1>I am here!!!!!</h1>
+
+const ReactFunctionHeading = () => (
+<div id="container">
+  {Title()}
+  <Title/>
+  300 + 200 = {300 + 200}
+  <h1 id="reactFunctionHeading" style={{color: "green"}}>
+    Hello World from React Function!
+  </h1>
+  <Assignment2/>
+</div>
+)
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(parent);
+root.render(<ReactFunctionHeading />);
