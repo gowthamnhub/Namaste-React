@@ -174,6 +174,35 @@ root.render(parent);
  So in this case react works only on the element/container where id is set to root, above or below whatever contents we have it won't be impacted by the react. This is the reason we call the react as library as well, as it can be applied to even small portion of your application.
  Basically, ReactDOM.createRoot sets the working area for the react code.
 
+Before installing npm init -> do node js installation.
+
+What is NPM? it helps to manage NODE PACKAGES, but its full form is not NODE PACKAGE MANAGER!!!!!
+it helps to manage all the packages/libraries you need to use for the app. It is one of the largest package managers.
+
+When we do create-react-app or create react app by vite - it automatically configures our app with NPM, but if suppose we need to do it by manually - then we do "npm init" which asks few questions, once we provide answers it creates a PACKAGE.json file with details that we provided.
+
+PACKAGE.json - is a configuration for NPM.
+
+One of the important package for a react app is BUNDLER (webpack/parcel/vite....) helps for bundling/compressing our code to be production ready.
+To install the BUNDLER package, we can use command - "npm install -D parcel" => -D for dev dependency, only required for dev phase, not a normal dependency which can be used in production as well.
+
+
+
+it has installed;
+"devDependencies": {
+    "parcel": "^2.16.4" 
+  }
+  
+ -> "^" symbol is called carrot when we use this, npm will automatically upgrade to any latest minor version of package in our APP when available in NPM. it will upgrade to only minor and patch versions, but not major versions.
+but when my version is 2.8.1, and new version available 2.9 - is it minor or major? 
+same way: 2.8.1 -> 2.8.8 (minor or major)? 
+give an example for this minor to major? - MAJOR.MINOR.PATCH - is the template.
+
+ -> But when use "~" used, it blocks both major and minor updates, only patch update is allowed.
+ 
+ P
+  
+
 
 Can React itself make an app fast? 
 ------------------------------------
@@ -227,9 +256,142 @@ Can React itself make an app fast?
 		
 		So with the above command, we tell the package manager (npm) we want dev package/dependency of Parcel. And from the npm repository the parcel package will get installed to our project.
 		Parcel is like a beast, it gives amazing power to our app.
+		
+		
+	Once we run the above command - npm install -D parcel 
+		> it creates a new file called - package-lock.json - this is the file which holds all the actual versions of the packages used in the app. 
+		> when we have package-lock.json , and we run npm install or npm ci (clean and install) it does take the packages from package-lock.json file and installs the same exact versions locked, it does not update the package based on ^ carrot or ~ tilde symbol used in package.json file.
+		> when we delete the package-lock.json and re run "npm install" command then it takes the package versions allowed as per the package.json file and create new package-lock.json with updated packages.
+		> it is helpful when we test app with certain versions and we commit both package.json and package-lock.json file to prod, in prod server we run "npm install" command we do not want it to update the package, we want it to install the packages which are locked and tested in dev environment.
+		
+	And one more thing you could notice after we run npm install, a folder is created "node_modules" folder which holds all the dependency files. Like since we installed parcel, it will have parcel related files/folders, and it also installs/downloads all its own respective dependency packages as well (like parcel can depend on some packages, and each dependent package can depend on some packages - this is what known as TRANSITIVE DEPENDENCIES) it would download all of those files to node_modules. Hence node_modules is very heavy folder.
 
+		> Since these are auto generated/downloaded from npm when we run npm install - even if this folder is deleted, again we run npm install it will readd those files back, so need to commit this folder to git.
 		
+		For installing we use command "npm " but same when we want to execute a package - we use "npx ".
+		Now as we installed "parcel", we will execute parcel now. 
+			-> npx parcel index.html 
+				npx parcel starting_file_of_our_project
+				
+			PARCEL - basically a bundler package. 
+			
+			Here this command asks find the package named "parcel" in node_modules folder and run it. 
+			it bundles the html, css, js files together and makes index.html the entry point of the app, it also creates a server and host the app in local. so it starts like; http://localhost:1234/	
+			Looks like this is what happens when we do "npm start" but we will try to understand while the course progresses.
+
+		Also earlier we consumed "react" by CDN way which is not recommended, what if react is also a package (it is already a JS library only) inside node_modules it is easy to use and upgrade as well right. YES it is already a node_module package.
+			
+			so we can run 
+						- npm install react 
+						- npm install react-dom 
+						
+			import React and ReactDOM from react and react-dom packages in App.js file.			
+			
+			Also parcel does few more things for us;	
+				- dev build 
+				- host app to local server 
+				- HMR - Hot Module Replacement - whenever code updates, replaces the page in browser.
+				- File Watching Algorithm - it has this algo to keep watching for file updates, it is written in C++.
+				- Does caching - so subsequent builds can be faster. (Parcel has a "cache" package in its folder)
+				- Image Optimization 
+				- Bundling 
+				- Minification 
+				- Compression 
+				- Consistent Hashing 
+				- Code splitting 
+				- Differential Bundling - supports older browsers.
+				- Diagnostic 
+				- Error Handling
+				- HTTPs
+				- Tree Shaking - removes unused code (while bundling????)
+				- Different dev and prod bundles
+				
 		
+	We can also configure browserslist in package.json to mention what are the browser versions our app must be working, it will work on other browsers as well, but it must be working on whatever configured.
+		like below, it will work on all browsers last 2 versions; it may or may not work on previous versions.
+		
+			"browserslist": [
+				"last 2 versions"
+			]
 	  
-	  
+# Project Assignment: - In your existing project 
+●  - intialize `npm` into your repo 
+		-> npm init 
+●  - install `react` and `react-dom`
+		-> npm install react 
+		-> npm install react-dom 
+●  - remove CDN links of react 
+		-> once removed from actual .html file.
+		-> import React and ReactDOM from "react", "react-dom/client" packages to App.js file.
+		-> import React from "react" 
+		-> import ReactDOM from "react-dom/client"
+		
+●  - install parcel
+		-> npm install -D parcel (-D for dev dependency)
+		
+●  - ignite your app with parcel 
+		-> Execute parcel package from app.
+		-> npx parcel index.html (it builds the project and starts app in local server)
+		-> for prod build - "npx parcel build index.html" - it does the minification and compression to reduce the file size.
+		
+●  - add scripts for “start” and “build” with parcel commands 
+		  "scripts": {
+					"test": "jest",
+					"start": "parcel index.html",
+					"build": "parcel build index.html"
+					},
+			so we can run "npm start" or npm run start -> internally executes npx parcel index.html to run our app in local.
+			For build, we can run npm run build, we cannot do npm build - since it is not supported by npm internally it has some common commands it allows skipping "run" keyword like for start, test .... not for build, dev .... custom commands.
+			
+●  - add `.gitignore` file - added. 
+●  - add `browserlists`
+		-> in package.json, add below property;
+			"browserslist": {
+				"last 2 versions"
+			}
+			
+			when we use something like; "last 2 firefox versions" - this query selects only last 2 firefox versions. 
+			to check what browsers (versions) it picks we can run "npx browserslist" command.
+			"defaults" for covering most of the browsers and versions used by most of the people.
+			
+●  - build a production version of your code using `parcel build` 
+		-> for prod build - "npx parcel build index.html" - it does the minification and compression to reduce the file size.
   
+  
+# Theory Assignment: 
+●  - What is `NPM`? - Package manager.
+●  - What is `Parcel/Webpack`? Why do we need it? 
+		> including Vite all three build tools to bundle the different files (html, js, css, image ....) together and compress it so that browser can understand and load the pages quickly.
+		> Since React, Angular, Vue are modern web app tools the files created from these are not directly understandable by the browsers, these bundlers only helps translating those files to standard browser understandable code, removes unused pieces, shrinks file sizes to load the pages quickly. 
+		> These tools are like how compilers work in C#, Java compiling the high level code to intermediate to low level code understandable by CPU to execute the code.
+		
+●  - What is `.parcel-cache` ? - helps to store build files/snapshot, to ensure faster subsequent builds.
+●  - What is `npx` ? - NODE PACKAGE EXECUTE. it is command to execute the node module packages.
+		> So NPM - NODE PACKAGE MANAGER - is a INSTALLER.
+		> NPX - is a RUNNER.
+		
+●  - What is difference between `dependencies` vs `devDependencies` 
+●  - What is Tree Shaking? 
+●  - What is Hot Module Replacement? 
+●  - List down your favourite 5 superpowers of Parcel and describe any 3 of them in your 
+own words. 
+●  - What is `.gitignore`? What should we add and not add into it? 
+●  - What is the difference between `package.json` and `package-lock.json` 
+●  - Why should I not modify `package-lock.json`? 
+●  - What is `node_modules` ? Is it a good idea to push that on git? 
+●  - What is the `dist` folder? - build files gets stored here, when we load the page, browser refers the pages from this folder only.
+●  - What is `browserlists` 
+Read about dif bundlers: vite, webpack, parcel 
+●  Read about:  ^ - caret and ~ - tilda 
+●  Read about Script types in html (MDN Docs)  
+
+
+Instead of keep writing big commands to start/build .... our app it is industry standard to write scripts in package.json to execute the packages for certain standard things.
+
+	Like;
+		"scripts": {
+				"start": "parcel index.html,
+				"build": "parcel build index.html"
+			}
+			
+	And we can just do; npm run start, npm run build (for start we can also do npm start, but for build it does not work - npm build).		
