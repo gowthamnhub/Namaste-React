@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Assignment2 } from "./Assignment2";
+import {FoodApp} from "./FoodApp/FoodApp";
 
 const heading = React.createElement("h1",{id: "heading"},"Hello World from React!");
 
@@ -24,4 +25,4 @@ const ReactFunctionHeading = () => (
 )
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ReactFunctionHeading />);
+root.render(<FoodApp />);
